@@ -1,0 +1,28 @@
+.container {
+    width: 80%;
+    margin: auto;
+  }
+  
+  .professor {
+    margin-bottom: 2em;
+  }
+  
+  .assistant {
+    margin-left: 2em;
+  }
+  
+  .studentAssistant {
+    margin-left: 4em;
+  }
+  
+  .group {
+    margin-left: 6em;
+  }
+  
+  .student {
+    margin-left: 8em;
+  }
+
+  .github {
+    margin-left: 1em;
+  }

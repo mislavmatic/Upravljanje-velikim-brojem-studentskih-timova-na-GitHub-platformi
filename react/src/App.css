@@ -1,0 +1,58 @@
+.App {
+  display: flex;
+  height: 100vh;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.group-info {
+  /* margin-left: 20px; */
+  
+  margin-left: 20vw;
+  width: 80vw;
+  height: 100%;
+  overflow: auto;
+}
+
+.Sidebar {
+  height: 100%;
+  width: 18vw;
+  background-color: #282c34;
+
+  /* display: flex;
+  flex-direction: column;
+  align-items: flex-start; */
+
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow: auto;
+
+  box-sizing: border-box;
+  padding: 1%;
+}
+
+.Sidebar input[type="file"] {
+  margin: 1%;
+}
+
+.Sidebar button {
+  margin: 1%;
+}
+
+.assistant {
+  margin-top: 1rem;
+}
+
+.group {
+  margin-left: 2rem;
+}
