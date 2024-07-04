@@ -1,6 +1,5 @@
-from openpyxl import Workbook, load_workbook
-
-from sqlalchemy import create_engine, ForeignKey, Column, String, Integer, CHAR, BigInteger, VARCHAR
+from openpyxl import load_workbook
+from sqlalchemy import create_engine, ForeignKey, Column, BigInteger, VARCHAR
 from sqlalchemy.orm import declarative_base, sessionmaker, relationship
 
 Base = declarative_base()
@@ -39,7 +38,6 @@ class Demos(Base):
 class Student(Base):
     __tablename__  = "Studenti"
 
-    # s_id = Column("s_id", BigInteger, primary_key=True)
     s_email = Column("s_email", VARCHAR(70), primary_key=True)
     name_stud = Column("name_stud",  VARCHAR(70))
 
@@ -70,7 +68,6 @@ class Grupa(Base):
     name_g = Column("name_g",  VARCHAR(70))
     name_zad = Column(VARCHAR(70), ForeignKey("Zadaci.name_zad"))
     de_id = Column(BigInteger, ForeignKey("Demosi.de_id"))
-    # leader_id = Column(BigInteger, ForeignKey("Studenti.s_id"))
     leader_email = Column(VARCHAR(70), ForeignKey("Studenti.s_email"))
 
     zadatak = relationship('Zadatak', back_populates='groups')
@@ -146,7 +143,6 @@ def parsiranje(file):
                 kursor = cell.row + 1
                 cell_stud = work_sheet['C' + str(kursor)].value
                 while cell_stud != "Prezime" and cell_stud != '\\' and kursor <= max_row:   # jel potreban ovaj prvi != Prezime ?
-                    #print(cell_stud)
                     if work_sheet['C' + str(kursor)].value == "\\":
                         break
                     cell_stud = work_sheet['C' + str(kursor)].value
@@ -171,8 +167,6 @@ def parsiranje(file):
 
                 demos_id = session.query(Demos).filter_by(name_demos=work_sheet[demos_name_cell].value).first().de_id
     
-                # leader_name = work_sheet['D' + str(cell.row + 1)].value + " " + work_sheet['C' + str(cell.row + 1)].value     #pretpostvaka je da je leader prvi od studenata u grupi
-                # leader_id = session.query(Student).filter_by(name_stud=leader_name).first().s_id
                 leader_email = work_sheet['B' + str(cell.row + 1)].value
 
                 grupa = Grupa(group_name, zad_name, demos_id, leader_email, github_link)
@@ -184,17 +178,13 @@ def parsiranje(file):
                 while cell_stud != "Prezime" and cell_stud != '\\' and kursor <= max_row:
                     if work_sheet['C' + str(kursor)].value == "\\":
                         break
-                    # cell_stud = work_sheet['C' + str(kursor)].value
-                    # stud_ime_prez = work_sheet['D' + str(kursor)].value + " " + cell_stud
                     stud_email = work_sheet['B' + str(kursor)].value
                     kursor += 1
-                    #s_id = session.query(Student).filter_by(name_stud=stud_ime_prez).first().s_id
                     studGrup = StudGrupa(stud_email, github_link)
                     session.add(studGrup)
                     session.commit()
                     
-                #print("")
 
             counter += 1
 
-    session.close()     # ?
+    session.close()
