@@ -2,8 +2,10 @@ from flask import Flask, request, jsonify
 from werkzeug.utils import secure_filename
 import os
 from sqlalchemy.orm import joinedload
-import excel_parse
-from excel_parse import Asistent, Demos, Student, Zadatak, Grupa, StudGrupa
+import excel_parse2
+from excel_parse2 import Asistent, Demos, Student, Zadatak, Grupa, StudGrupa
+# import excel_parse
+# from excel_parse import Asistent, Demos, Student, Zadatak, Grupa, StudGrupa
 
 app = Flask(__name__)
 
@@ -19,7 +21,8 @@ def upload_file():
     filepath = os.path.join('.', 'temp', filename)
     file.save(filepath)
 
-    excel_parse.parsiranje(file)
+    # excel_parse.parsiranje(file)
+    excel_parse2.parsiranje(file)
 
     return 'File processed successfully', 200
 
@@ -68,7 +71,8 @@ def upload_file():
 
 @app.route('/get_data', methods=['GET']) 
 def get_data():
-    session =  excel_parse.create_session()
+    # session =  excel_parse.create_session()
+    session =  excel_parse2.create_session()
     eror_file = open('temp/eror.txt', 'w', encoding='utf-8')
     data = []
     assistants = session.query(Asistent).all()
@@ -95,7 +99,9 @@ def get_data():
                 for stud_grupa in session.query(StudGrupa).filter(StudGrupa.github == group.github).all():
                     student_data = {
                         "name": stud_grupa.student.name_stud,
-                        "is_leader": stud_grupa.student.s_id == group.leader_id
+                        # "is_leader": stud_grupa.student.s_id == group.leader_id
+                        "stud_email": stud_grupa.student.s_email,
+                        "is_leader": stud_grupa.student.s_email == group.leader_email,
                     }
                     group_data["students"].append(student_data)
 
