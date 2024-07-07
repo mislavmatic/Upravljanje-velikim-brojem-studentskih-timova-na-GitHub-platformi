@@ -15,7 +15,8 @@ function App() {
           <h2>{selectedGroup.name_g}</h2>
           <p>GitHub: <a href={selectedGroup.github}>{selectedGroup.github}</a></p>
           <p>Zadatak: {selectedGroup.name_zad}</p>
-          <p>Demos: {selectedGroup.name_demos}</p>          
+          <p>Demos: {selectedGroup.name_demos}</p> 
+          <p>Broj predaja na GitHubu: {selectedGroup.commit_count}</p> 
           <div>Studenti: <div style={{ marginLeft: '2vh' }}>
                           {selectedGroup.students.map(student => (
                             <div key={student.s_email} className="student">

@@ -1,0 +1,14 @@
+/* input_file::-webkit-file-upload-button {
+    visibility: hidden;
+    display: block;
+    font-size: 0px;
+} */
+
+/* input::file-selector-button {
+    display: block;
+    font-size: 0px;
+} */
+
+/* form .elementor-field-type-upload input[type="file"] {
+    font-size: 0px;
+} */

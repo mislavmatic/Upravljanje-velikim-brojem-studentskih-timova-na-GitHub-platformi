@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
+import "./FileUpload.css"
 
 function FileUpload() {
     const [selectedFile, setSelectedFile] = useState();
+    // const [fileName, setFileName] = useState('');
 
     const handleFileChange = (e) => {
-        setSelectedFile(e.target.files[0]);
+        const file = e.target.files[0];
+        setSelectedFile(file);
+        // setFileName(file ? file.name : '');
     };
 
     const handleSubmit = (e) => {
@@ -34,7 +38,10 @@ function FileUpload() {
 
     return (
         <form onSubmit={handleSubmit}>
-            <input type="file" onChange={handleFileChange} />
+            {/* <label htmlFor="input_file" className="custom-file-upload">
+                {fileName}
+            </label> */}
+            <input type="file" id='input_file' onChange={handleFileChange}/>
             <button type="submit">Submit</button>
         </form>
     );
