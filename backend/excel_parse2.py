@@ -69,17 +69,19 @@ class Grupa(Base):
     name_zad = Column(VARCHAR(70), ForeignKey("Zadaci.name_zad"))
     de_id = Column(BigInteger, ForeignKey("Demosi.de_id"))
     leader_email = Column(VARCHAR(70), ForeignKey("Studenti.s_email"))
+    commit_count = Column(BigInteger, nullable=True, default=None)
 
     zadatak = relationship('Zadatak', back_populates='groups')
     demos = relationship('Demos', back_populates='groups')
     students = relationship('StudGrupa', back_populates='group')
 
-    def __init__(self, name_g, name_zad, demos_id, leader_email, github) -> None:
+    def __init__(self, name_g, name_zad, demos_id, leader_email, github, commit_c = None) -> None:
         self.name_g = name_g
         self.name_zad = name_zad
         self.de_id = demos_id
         self.leader_email = leader_email
         self.github = github
+        self.commit_count = None
 
 class StudGrupa(Base):
     __tablename__  = "StudGrupa"

@@ -3,6 +3,7 @@ from werkzeug.utils import secure_filename
 import os
 import excel_parse2
 from excel_parse2 import Asistent, Demos, Student, Zadatak, Grupa, StudGrupa
+from podsustavDamjan import getCommitCount
 
 app = Flask(__name__)
 
@@ -40,11 +41,14 @@ def get_data():
             eror_file.write("   " + demos.name_demos + "\n")
             for group in demos.groups:
                 eror_file.write("      " + group.name_g + "\n")
+                # temp_c_c = getCommitCount(group.github)
                 group_data = {
                     "name_demos": demos.name_demos,
                     "name_g": group.name_g,
                     "github": group.github,
                     "name_zad": group.zadatak.name_zad,
+                    "commit_count": group.commit_count,
+                    # "commit_count": temp_c_c,
                     "students": []
                 }
 
@@ -68,6 +72,47 @@ def get_data():
     
     session.close()
     eror_file.close()
+    return response
+
+# def calculate_commit_count(group_id):
+#     # Ovdje implementirajte logiku za izračunavanje broja commitova
+#     # Za primjer, vraćamo fiksni broj
+#     return group_id + 42  # Pretpostavimo da je ovo rezultat izračunavanja
+
+@app.route('/api/group-commit-count/<path:group_link>', methods=['GET'])
+def get_commit_count(group_link):
+    commit_count = getCommitCount(group_link)
+    session =  excel_parse2.create_session()
+    group_data = session.query(Grupa).filter(Grupa.github == group_link).first()
+    if group_data:
+        group_data.commit_count = commit_count
+        session.commit()
+
+        demos = session.query(Demos).filter(Demos.de_id == group_data.de_id).first()
+        demos_name = demos.name_demos if demos else 'Unknown'
+        
+        group_dict = {
+            "name_demos": demos_name,
+            "name_g": group_data.name_g,
+            "github": group_data.github,
+            "name_zad": group_data.name_zad,
+            "commit_count": group_data.commit_count,
+            "students": []
+        }
+        
+
+        for stud_grupa in session.query(StudGrupa).filter(StudGrupa.github == group_data.github).all():
+            student_data = {
+                "name": stud_grupa.student.name_stud,
+                "stud_email": stud_grupa.student.s_email,
+                "is_leader": stud_grupa.student.s_email == group_data.leader_email,
+            }
+            group_dict["students"].append(student_data)
+
+    session.close()
+    # print(group_dict)
+    response = jsonify(group_dict)
+    response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
 if __name__ == '__main__':
