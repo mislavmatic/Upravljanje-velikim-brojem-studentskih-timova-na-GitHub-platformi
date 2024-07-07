@@ -74,11 +74,6 @@ def get_data():
     eror_file.close()
     return response
 
-# def calculate_commit_count(group_id):
-#     # Ovdje implementirajte logiku za izračunavanje broja commitova
-#     # Za primjer, vraćamo fiksni broj
-#     return group_id + 42  # Pretpostavimo da je ovo rezultat izračunavanja
-
 @app.route('/api/group-commit-count/<path:group_link>', methods=['GET'])
 def get_commit_count(group_link):
     commit_count = getCommitCount(group_link)
