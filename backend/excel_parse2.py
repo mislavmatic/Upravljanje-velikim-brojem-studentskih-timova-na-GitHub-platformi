@@ -101,7 +101,15 @@ class StudGrupa(Base):
 #     __tablename__ = "StudOcjena"
 
 def create_session():
-        engine = create_engine("postgresql+psycopg2://postgres:bazepodataka@localhost:5434/ZavrsniRad", echo=True) #@localhost:5432/zavrsnirad
+        with open('config.json') as c:
+            config = json.load(c)
+        
+        nbp_USER = config['nbp_USER']
+        nbp_PASSWORD =config['nbp_PASSWORD']
+        nbp_HOST = config['nbp_HOST']
+        nbp_PORT = config['nbp_PORT']
+        nbp_db_NAME = config['nbp_db_NAME']      
+        engine = create_engine(f'postgresql+psycopg2://{nbp_USER}:{nbp_PASSWORD}@{nbp_HOST}:{nbp_PORT}/{nbp_db_NAME}', echo=True)
         Base.metadata.create_all(bind=engine)
 
         Session = sessionmaker(bind=engine)
