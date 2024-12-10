@@ -1,6 +1,7 @@
 from openpyxl import load_workbook
 from sqlalchemy import create_engine, ForeignKey, Column, BigInteger, VARCHAR
 from sqlalchemy.orm import declarative_base, sessionmaker, relationship
+import json
 
 Base = declarative_base()
 
