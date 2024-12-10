@@ -76,11 +76,11 @@ def get_data():
 
 @app.route('/api/group-commit-count/<path:group_link>', methods=['GET'])
 def get_commit_count(group_link):
-    commit_count = getCommitCount(group_link)
+    # commit_count = getCommitCount(group_link)
     session =  excel_parse2.create_session()
     group_data = session.query(Grupa).filter(Grupa.github == group_link).first()
     if group_data:
-        group_data.commit_count = commit_count
+        # group_data.commit_count = commit_count
         session.commit()
 
         demos = session.query(Demos).filter(Demos.de_id == group_data.de_id).first()
@@ -91,7 +91,7 @@ def get_commit_count(group_link):
             "name_g": group_data.name_g,
             "github": group_data.github,
             "name_zad": group_data.name_zad,
-            "commit_count": group_data.commit_count,
+            # "commit_count": group_data.commit_count,
             "students": []
         }
         
