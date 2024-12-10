@@ -76,7 +76,7 @@ function GetJSON() {
                             <h2 onClick={() => toggleExpandedGrupe(`${asistentIndex}-${groupIndex}`)}>{group.name_g}</h2>
                             {expandedGrupe[`${asistentIndex}-${groupIndex}`] && (
                                 <>
-                                    <p>Demos: {group.name_demos}</p>
+                                    <p>Demonstrator: {group.name_demos}</p>
                                     <p>Zadatak: {group.name_zad}</p>
                                     <p>GitHub: <a href={group.github}>{group.github}</a></p>
                                     {group.students.map(student => (
