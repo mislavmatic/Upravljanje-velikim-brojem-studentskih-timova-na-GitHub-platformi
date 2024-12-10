@@ -82,7 +82,7 @@ class Grupa(Base):
         self.de_id = demos_id
         self.leader_email = leader_email
         self.github = github
-        self.commit_count = None
+        self.commit_count = commit_c
 
 class StudGrupa(Base):
     __tablename__  = "StudGrupa"
